@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 function Footer() {
   return (
-    <div className="mt-5 bg:black">
+    <div className="mt-5 bg:black" style={{backgroundColor:'#90ee90'}}>
       <div
         style={{ width: "100%", height: "300px" }}
         className="d-flex flex-column justify-content-center align-items-center flex-wrap"
