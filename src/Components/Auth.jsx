@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, FormControl } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import { registerAPI } from '../Services/allAPI'
+import { logAPI, registerAPI } from '../Services/allAPI'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,6 +34,34 @@ const handleRegister=async(e)=>{
        toast.warning(result.response.data)
       }
   }
+}
+
+
+
+const handleLogin=async (e)=>{
+       e.preventDefault()
+       const {email,password}=userData
+
+
+
+       if(!email||!password){
+         toast.info("please fill the form completely")
+       }
+       else{
+          const result=await logAPI(userData)
+           if(result.status===200){
+             sessionStorage.setItem("existingUser",JSON.stringify(result.data.existingUser))
+             sessionStorage.setItem("token",result.data.token)
+
+             toast.success(`${result.data.username} has registered successfully !!!!`)
+             setUserData({
+               username:"",email:"",password:""
+             })
+             navigate("/")
+           }else{
+            toast.warning(result.response.data)
+           }
+       }
 }
 
 
@@ -82,7 +110,7 @@ const handleRegister=async(e)=>{
                             <p>Already have Account ? Click login<Link className='btn btn-warning' to={'/login'}>Login</Link></p>
                         </div>:
                         <div>
-                            <button className='btn btn-light mb-2'>Login</button>
+                            <button onClickCapture={handleLogin} className='btn btn-light mb-2'>Login</button>
                             <p>New User? Click here To Register<Link className='btn btn-warning'  to={'/register'}>Register</Link></p>
                         </div>
                     }

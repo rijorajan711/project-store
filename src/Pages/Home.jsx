@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import {Row,Col} from "react-bootstrap"
 import ProjectCard from '../Components/ProjectCard'
 import { Link } from 'react-router-dom'
 function Home() {
+
+  const [logedIn,setLogedIn]=useState(false)
+  useEffect(()=>{
+    if(sessionStorage.getItem("token")){
+         setLogedIn(true)
+    }else{
+      setLogedIn(false)
+    }
+  },[])
 
 
   return (
@@ -19,8 +28,12 @@ function Home() {
                 ldjfuosd bgfihbzdfli hgbsdfbgflkdfh gskdjbfglisdfglhisdbgu sgsiyfg;iusdfg
                 ukzgfobgh sdlfjgbzid fngl isidh gksdjhb hlivb d g igiy giagrigbs dkhlhfliiiphdb p govuge
               </p>
+           
+             {
+              logedIn?
+              <Link to={'/dashboard'} className='btn btn-warning'>Manage Your Project<i className='fa-solid fa-right-long fa-beat ms-2'></i></Link>:
               <Link to={'/login'} className='btn btn-warning'>Start to Explore<i className='fa-solid fa-right-long fa-beat ms-2'></i></Link>
-
+             }
          
         </Col>
         <Col sm={12} md={6}>
